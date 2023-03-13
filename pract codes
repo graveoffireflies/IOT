@@ -1,0 +1,220 @@
+stepper motor
+
+#include<Stepper.h>
+const int stepsPerRevolution=200;
+Stepper myStepper(stepsPerRevolution,8,9,10,11);
+int stepCount=0;
+
+void setup()
+  
+{
+}
+
+void loop()
+{
+ int sensorReading=analogRead(A0);
+ int motorSpeed=map(sensorReading,0,1023,0,250);
+  if(motorSpeed>0){
+    myStepper.setSpeed(motorSpeed);
+    myStepper.step(stepsPerRevolution/100);
+  }
+}
+----------------------------------------------------------------------------
+temp sensor
+
+char degree=176;
+void setup()
+{
+  pinMode(A0,INPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+  int temp = analogRead(A0);
+  float voltage = (temp*5)/1024;
+  float milivolt = voltage*1000;
+  float celsius = (milivolt-500)/10;
+  float fahrenheit = (celsius*9/5)+32;
+  Serial.print("10 bit number : " );
+  Serial.println(temp);
+  Serial.print("voltage : " );
+  Serial.print(voltage);
+  Serial.print("milivolt : " );
+  Serial.print(milivolt);
+  Serial.print("celsius : " );
+  Serial.print(celsius);
+  Serial.println(degree);
+  Serial.print("fahrenheit : " );
+  Serial.print(fahrenheit);
+   delay(1000);
+}
+------------------------------------------------------------------------------
+traffic light
+
+int led1 = 2;
+int led2 = 1;
+int led3 = 0; 
+void setup()
+{
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  delay(2000);
+  
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, LOW);
+  delay(2000);
+  
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, HIGH);
+  delay(2000);
+ 
+}
+----------------------------------------------------------------------------------------------------
+matrix
+
+#define ROW1 13
+#define ROW2 12
+#define ROW3 11
+#define ROW4 10
+#define ROW5 9
+#define ROW6 8
+#define ROW7 7
+#define ROW8 6
+
+#define COL1 5
+#define COL2 4
+#define COL3 3
+#define COL4 2
+#define COL5 A3
+#define COL6 A2
+#define COL7 A1
+#define COL8 A0
+
+const int row[] = {ROW1, ROW2, ROW3, ROW4, ROW5, ROW6, ROW7, ROW8};
+const int col[] = {COL1,COL2, COL3, COL4, COL5, COL6, COL7, COL8};
+
+int KARE1[8][8] =	{{0,0,0,0,0,0,0,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,1,1,1,1,1,1,0},
+					 {0,0,0,0,0,0,0,0}};
+				
+int KARE2[8][8] =	{{1,1,1,1,1,1,1,1},
+					 {1,0,0,0,0,0,0,1},
+					 {1,0,1,1,1,1,0,1},
+					 {1,0,1,1,1,1,0,1},
+					 {1,0,1,1,1,1,0,1},
+					 {1,0,1,1,1,1,0,1},
+					 {1,0,0,0,0,0,0,1},
+					 {1,1,1,1,1,1,1,1}};
+				 
+int KARE3[8][8] =	{{1,1,1,1,1,1,1,1},
+					 {1,1,1,1,1,1,1,1},
+					 {1,1,0,0,0,0,1,1},
+					 {1,1,0,1,1,0,1,1},
+					 {1,1,0,1,1,0,1,1},
+					 {1,1,0,0,0,0,1,1},
+					 {1,1,1,1,1,1,1,1},
+					 {1,1,1,1,1,1,1,1}};
+
+int KARE4[8][8] =	{{1,1,1,1,1,1,1,1},
+					 {1,1,1,1,1,1,1,1},
+					 {1,1,1,1,1,1,1,1},
+					 {1,1,1,0,0,1,1,1},
+					 {1,1,1,0,0,1,1,1},
+					 {1,1,1,1,1,1,1,1},
+					 {1,1,1,1,1,1,1,1},
+{1,1,1,1,1,1,1,1}};
+void setup() {
+  Serial.begin(9600);
+  for (int i = 2; i <= 13; i++) {
+    pinMode(i, OUTPUT);
+    digitalWrite(i, LOW);
+  }
+  pinMode(A0, OUTPUT);
+  digitalWrite(A0, LOW);
+  pinMode(A1, OUTPUT);
+  digitalWrite(A1, LOW);
+  pinMode(A2, OUTPUT);
+  digitalWrite(A2, LOW);
+  pinMode(A3, OUTPUT);
+  digitalWrite(A3, LOW);
+}
+
+void loop() {
+  
+/*  for (int c=0; c<22; c++){
+  drawScreen(KARE2);
+ 
+}
+  delay(444);
+  for (int c=0; c<22; c++){
+  drawScreen(KARE3);
+   
+}
+  delay(444);
+    for (int c=0; c<22; c++){
+  drawScreen(KARE4); */
+  
+for (int c=0; c<22; c++){
+  drawScreen(KARE1);
+ 
+}
+  delay(444);
+for (int c=0; c<22; c++){
+  drawScreen(KARE2);
+ 
+}
+  delay(444);
+  for (int c=0; c<22; c++){
+  drawScreen(KARE3);
+   
+}
+  delay(444);
+    for (int c=0; c<22; c++){
+  drawScreen(KARE4);
+   
+}
+  delay(444);
+    for (int c=0; c<22; c++){
+  drawScreen(KARE3);
+   
+}
+  delay(444);
+    for (int c=0; c<22; c++){
+  drawScreen(KARE2);
+   
+}
+  delay(444);
+}
+
+void  drawScreen(int letter[8][8]){
+  for (int c=0; c<8; c++){
+    
+    digitalWrite(col[c], HIGH);
+    for (int r = 0; r < 8; r++){
+      digitalWrite(row[r], 255*letter[r][c]);
+      delayMicroseconds(100);
+    }
+    for (int r = 0; r < 8; r++){
+      digitalWrite(row[r], HIGH);
+      delayMicroseconds(100);
+    }
+        
+    digitalWrite(col[c], LOW);
+  }
+}
+
